@@ -30,8 +30,8 @@ func printUsage() {
 
 	t := template.Must(template.New("bublUsage").Parse(bublUsage))
 
-	for _, r := range u {
-		if err := t.Execute(os.Stdin, r); err != nil {
+	for _, usage := range u {
+		if err := t.Execute(os.Stdin, usage); err != nil {
 			log.Fatalln("Failed creating template", err)
 		}
 	}
@@ -44,7 +44,6 @@ func invalidArgs(cmd, cmdUsage string, validArg int) {
 }
 
 func Execute() {
-	// bubl commands
 	createCommand := flag.NewFlagSet("create", flag.ExitOnError)
 	genCommand := flag.NewFlagSet("gen", flag.ExitOnError)
 
