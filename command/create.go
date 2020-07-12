@@ -5,15 +5,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
 )
 
-type bubble struct {
+type Bubble struct {
 	Alias string `json:"alias"`
 	Path  string `json:"path"`
 }
 
-func bubbleExist(b []bubble, alias string) bool {
+func bubbleExist(b []Bubble, alias string) bool {
 	for _, v := range b {
 		if v.Alias == alias {
 			fmt.Printf("Bubble '%v' already exists, please use another alias.\n\n", alias)
@@ -29,19 +28,13 @@ func bubbleExist(b []bubble, alias string) bool {
 // May not be the most efficient when 'bubbles.json' gets really large
 // but this will do perfectly fine for now.
 func CreateBubl(path, alias string) {
-	file, err := ioutil.ReadFile("bubbles.json")
-	if err != nil {
-		log.Fatal("ERROR: Unable to read Bubble!", err)
-	}
-
-	bubbles := []bubble{}
-	json.Unmarshal(file, &bubbles)
+	bubbles := LoadBubbles()
 
 	if bubbleExist(bubbles, alias) {
-		os.Exit(1)
+		return
 	}
 
-	bubl := bubble{
+	bubl := Bubble{
 		Alias: alias,
 		Path:  path,
 	}
@@ -50,7 +43,7 @@ func CreateBubl(path, alias string) {
 
 	b, err := json.Marshal(bubbles)
 	if err != nil {
-		log.Fatal("ERROR: Unable to marshal bubbles.json!", err)
+		log.Fatal("ERROR: Unable to marshal bubbles!", err)
 	}
 
 	if err := ioutil.WriteFile("bubbles.json", b, 0644); err != nil {
