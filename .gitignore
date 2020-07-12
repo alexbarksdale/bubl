@@ -19,3 +19,9 @@ bubl
 ### Go Patch ###
 /vendor/
 /Godeps/
+
+# MacOS
+.DS_STORE
+
+# Config file
+bubbles.json

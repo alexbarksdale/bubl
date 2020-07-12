@@ -1,11 +1,7 @@
 package main
 
-import (
-	"github.com/alexbarksdale/bubl/file"
-)
+import "github.com/alexbarksdale/bubl/command"
 
 func main() {
-	// command.Execute()
-
-	file.CreateBubl()
+	command.Execute()
 }
