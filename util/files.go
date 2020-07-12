@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -35,6 +36,9 @@ func CopyFile(src, dst string) error {
 
 	fileDst, err := os.Create(dst)
 	if err != nil {
+		fmt.Printf("File '%v' may already exist.\n", dst)
+		fmt.Println("Please remove any matching file names and try again.")
+		fmt.Println("")
 		log.Fatal("ERROR: Unable to create file!\n", err)
 	}
 	defer fileDst.Close()
@@ -58,6 +62,9 @@ func CopyDir(src, dst string) {
 	}
 
 	if err := os.MkdirAll(dst, info.Mode()); err != nil {
+		fmt.Printf("Directory '%v' may already exist.\n", dst)
+		fmt.Println("Please remove any matching directory names and try again.")
+		fmt.Println("")
 		log.Fatal("ERROR: Unable to make directory!\n", err)
 	}
 

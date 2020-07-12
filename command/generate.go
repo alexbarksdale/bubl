@@ -35,9 +35,7 @@ func GenBubble(alias string) {
 		log.Fatal("ERROR: Unable to read source information!\n", err)
 	}
 
-	fmt.Printf("Generating bubble: '%v'\n", alias)
-	fmt.Println("This may take a few seconds...")
-	fmt.Println("")
+	fmt.Printf("Generating bubble: '%v'\n\n", alias)
 
 	if info.IsDir() {
 		util.CopyDir(src, info.Name())
