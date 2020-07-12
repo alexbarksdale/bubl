@@ -2,8 +2,10 @@ package util
 
 import (
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
+	"path"
 )
 
 func FileExists(filename string) bool {
@@ -48,4 +50,33 @@ func CopyFile(src, dst string) error {
 
 	return os.Chmod(dst, srcInfo.Mode())
 
+}
+
+func CopyDir(src, dst string) {
+	info, err := os.Stat(src)
+	if err != nil {
+		log.Fatal("ERROR: Unable to read source information!", err)
+	}
+
+	if err := os.MkdirAll(dst, info.Mode()); err != nil {
+		log.Fatal("ERROR: Unable to make directory!", err)
+	}
+
+	dir, err := ioutil.ReadDir(src)
+	if err != nil {
+		log.Fatal("ERROR: Unable to read source directory!", err)
+	}
+
+	for _, file := range dir {
+		srcPath := path.Join(src, file.Name())
+		dstPath := path.Join(dst, file.Name())
+
+		if file.IsDir() {
+			CopyDir(srcPath, dstPath)
+		} else {
+			if err := CopyFile(srcPath, dstPath); err != nil {
+				log.Fatal("ERROR: Failed to copy file", err)
+			}
+		}
+	}
 }
