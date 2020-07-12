@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/alexbarksdale/bubl/util"
@@ -31,7 +32,7 @@ func GenBubble(alias string) {
 
 	info, err := os.Stat(src)
 	if err != nil {
-		fmt.Println("ERROR: Unable to read source information!", err)
+		log.Fatal("ERROR: Unable to read source information!\n", err)
 	}
 
 	fmt.Printf("Generating bubble: '%v'\n", alias)

@@ -43,11 +43,11 @@ func CreateBubl(path, alias string) {
 
 	b, err := json.Marshal(bubbles)
 	if err != nil {
-		log.Fatal("ERROR: Unable to marshal bubbles!", err)
+		log.Fatal("ERROR: Unable to marshal bubbles!\n", err)
 	}
 
 	if err := ioutil.WriteFile("bubbles.json", b, 0644); err != nil {
-		log.Fatal("ERROR: Failed to save bubble to file!")
+		log.Fatal("ERROR: Failed to save bubble to file!\n")
 	}
 
 	fmt.Println("Successfully created bubble.")

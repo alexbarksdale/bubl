@@ -50,7 +50,7 @@ func printUsage() {
 
 	for _, usage := range u {
 		if err := t.Execute(os.Stdin, usage); err != nil {
-			log.Fatalln("ERROR: Failed creating template!", err)
+			log.Fatalln("ERROR: Failed creating template!\n", err)
 		}
 	}
 }
@@ -58,7 +58,7 @@ func printUsage() {
 func LoadBubbles() []Bubble {
 	file, err := ioutil.ReadFile("bubbles.json")
 	if err != nil {
-		log.Fatal("ERROR: Unable to read Bubble!", err)
+		log.Fatal("ERROR: Unable to read bubbles!\n", err)
 	}
 
 	bubbles := []Bubble{}
@@ -111,7 +111,7 @@ func Execute() {
 	}
 
 	if genCommand.Parsed() {
-		fmt.Println(os.Args[2:])
+		GenBubble(os.Args[2])
 	}
 
 	if popCommand.Parsed() {
