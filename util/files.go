@@ -1,6 +1,7 @@
 package util
 
 import (
+	"io"
 	"log"
 	"os"
 )
@@ -21,4 +22,30 @@ func CreateConfig() {
 		}
 		file.Close()
 	}
+}
+
+func CopyFile(src, dst string) error {
+	srcFile, err := os.Open(src)
+	if err != nil {
+		log.Fatal("ERROR: Unable to open file!", err)
+	}
+	defer srcFile.Close()
+
+	fileDst, err := os.Create(dst)
+	if err != nil {
+		log.Fatal("ERROR: Unable to create file!", err)
+	}
+	defer fileDst.Close()
+
+	if _, err := io.Copy(fileDst, srcFile); err != nil {
+		log.Fatal("ERROR: Unable to copy file!", err)
+	}
+
+	srcInfo, err := os.Stat(src)
+	if err != nil {
+		log.Fatal("ERROR: Unable to read file information!", err)
+	}
+
+	return os.Chmod(dst, srcInfo.Mode())
+
 }
