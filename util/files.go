@@ -30,9 +30,14 @@ func CreateConfig() {
 		log.Fatal("ERROR: Unable to get user config directory! \n")
 	}
 
-	BublConfig = filepath.Join(cfg, "bubbles.json")
+	bublDir := filepath.Join(cfg, "bubl")
+	BublConfig = filepath.Join(bublDir, "bubbles.json")
 
 	if !FileExists(BublConfig) {
+		if err := os.Mkdir(bublDir, 0777); err != nil {
+			log.Fatal("ERROR: Failed to make directory\n", err)
+		}
+
 		file, err := os.Create(BublConfig)
 		if err != nil {
 			log.Fatal("ERROR: Unable to create file!\n", err)
