@@ -30,13 +30,14 @@ const (
 	PopUsage    = `bubl pop <bubl-alias>`
 )
 
-func invalidArgs(cmd, cmdUsage string, validArg int) {
-	if validArg == 1 {
+func invalidArgs(cmd, cmdUsage string, validArg, argGiven int) {
+	if argGiven == 1 {
 		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
 	} else {
-		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, len(os.Args[2:]))
+		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argGiven)
 	}
 	fmt.Println(cmdUsage)
+	fmt.Println("")
 	os.Exit(1)
 }
 
@@ -50,7 +51,7 @@ func printUsage() {
 	t := template.Must(template.New("bublUsage").Parse(bublUsage))
 
 	for _, usage := range u {
-		if err := t.Execute(os.Stdin, usage); err != nil {
+		if err := t.Execute(os.Stdout, usage); err != nil {
 			log.Fatalln("ERROR: Failed creating template!\n", err)
 		}
 	}
@@ -76,29 +77,28 @@ func Execute() {
 	genCommand := flag.NewFlagSet("gen", flag.ExitOnError)
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
 
-	argLen := len(os.Args)
-
-	if argLen < 2 {
+	if len(os.Args) < 2 {
 		printUsage()
 		return
 	}
 
 	input := os.Args[2:]
+	inputLen := len(input)
 
 	switch os.Args[1] {
 	case "create":
-		if argLen != 4 {
-			invalidArgs("create", CreateUsage, 2)
+		if inputLen != 2 {
+			invalidArgs("create", CreateUsage, 2, inputLen)
 		}
 		createCommand.Parse(input)
 	case "gen":
-		if argLen != 3 {
-			invalidArgs("gen", GenUsage, 1)
+		if inputLen != 1 {
+			invalidArgs("gen", GenUsage, 1, inputLen)
 		}
 		genCommand.Parse(input)
 	case "pop":
-		if argLen != 3 {
-			invalidArgs("pop", PopUsage, 1)
+		if inputLen != 1 {
+			invalidArgs("pop", PopUsage, 1, inputLen)
 		}
 		popCommand.Parse(input)
 	default:

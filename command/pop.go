@@ -26,7 +26,7 @@ func PopBubble(alias string) {
 
 	removedBubble, success := removeBubble(bubbles, alias)
 	if !success {
-		fmt.Printf("Unable to find bubble: '%v'\n", alias)
+		fmt.Printf("Unable to find bubble: '%v'\n\n", alias)
 		// TODO: Print list bubble info
 		return
 	}
@@ -40,5 +40,5 @@ func PopBubble(alias string) {
 		log.Fatal("ERROR: Failed to save bubble to file!\n")
 	}
 
-	fmt.Printf("Successfully removed bubble: '%v'\n", alias)
+	fmt.Printf("Successfully removed bubble: '%v'\n\n", alias)
 }

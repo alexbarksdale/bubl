@@ -25,7 +25,7 @@ func GenBubble(alias string) {
 
 	src, found := findBubbleSrc(bubbles, alias)
 	if !found {
-		fmt.Printf("Bubble '%v' does not exist, please use another alias.\n\n", alias)
+		fmt.Printf("Bubble '%v' does not exist, please try another alias.\n\n", alias)
 		// TODO: Show available bubbles
 		return
 	}
@@ -45,6 +45,6 @@ func GenBubble(alias string) {
 		util.CopyFile(src, info.Name())
 	}
 
-	fmt.Printf("Successfully generated bubble: '%v'", alias)
+	fmt.Printf("Successfully generated bubble: '%v'\n", alias)
 	fmt.Println("")
 }
