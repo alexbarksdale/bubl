@@ -35,7 +35,7 @@ func CreateConfig() {
 
 	if !FileExists(BublConfig) {
 		if err := os.Mkdir(bublDir, 0777); err != nil {
-			log.Fatal("ERROR: Failed to make directory\n", err)
+			log.Println("Can't find bubble config, creating now...")
 		}
 
 		file, err := os.Create(BublConfig)
