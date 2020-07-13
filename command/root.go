@@ -19,10 +19,11 @@ const (
 	Create a new bubble template.
 
 {{.Gen}}
-	Generate a boilerplate file/project from a bubble.
+	Generate a file/directory from a bubble.
 
 {{.Pop}}
 	Remove a bubble template.
+
 `
 	CreateUsage = `bubl create <template-path> <bubl-alias>`
 	GenUsage    = `bubl gen <bubl-alias>`
@@ -56,7 +57,7 @@ func printUsage() {
 }
 
 func LoadBubbles() []Bubble {
-	file, err := ioutil.ReadFile("bubbles.json")
+	file, err := ioutil.ReadFile(util.BublConfig)
 	if err != nil {
 		log.Fatal("ERROR: Unable to read bubbles!\n", err)
 	}

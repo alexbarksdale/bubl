@@ -7,7 +7,14 @@ import (
 	"log"
 	"os"
 	"path"
+	"path/filepath"
 )
+
+var BublConfig string
+
+type Config struct {
+	Path string `json:"path"`
+}
 
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
@@ -18,8 +25,15 @@ func FileExists(filename string) bool {
 }
 
 func CreateConfig() {
-	if !FileExists("bubbles.json") {
-		file, err := os.Create("bubbles.json")
+	cfg, err := os.UserConfigDir()
+	if err != nil {
+		log.Fatal("ERROR: Unable to get user config directory! \n")
+	}
+
+	BublConfig = filepath.Join(cfg, "bubbles.json")
+
+	if !FileExists(BublConfig) {
+		file, err := os.Create(BublConfig)
 		if err != nil {
 			log.Fatal("ERROR: Unable to create file!\n", err)
 		}
@@ -56,6 +70,7 @@ func CopyFile(src, dst string) error {
 }
 
 func CopyDir(src, dst string) {
+
 	info, err := os.Stat(src)
 	if err != nil {
 		log.Fatal("ERROR: Unable to read source information!\n", err)

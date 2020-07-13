@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+
+	"github.com/alexbarksdale/bubl/util"
 )
 
 type Bubble struct {
@@ -15,7 +17,7 @@ type Bubble struct {
 func bubbleExist(b []Bubble, alias string) bool {
 	for _, v := range b {
 		if v.Alias == alias {
-			fmt.Printf("Bubble '%v' already exists, please use another alias.\n\n", alias)
+			fmt.Printf("Bubble '%v' already exists, please try another alias.\n\n", alias)
 			fmt.Println("Existing Bubble")
 			fmt.Println("────────────────")
 			fmt.Printf("Alias: %v\nPath: %v\n\n", v.Alias, v.Path)
@@ -46,7 +48,7 @@ func CreateBubl(path, alias string) {
 		log.Fatal("ERROR: Unable to marshal bubbles!\n", err)
 	}
 
-	if err := ioutil.WriteFile("bubbles.json", b, 0644); err != nil {
+	if err := ioutil.WriteFile(util.BublConfig, b, 0644); err != nil {
 		log.Fatal("ERROR: Failed to save bubble to file!\n")
 	}
 
