@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+
+	"github.com/alexbarksdale/bubl/util"
 )
 
 func removeBubble(b []Bubble, alias string) ([]Bubble, bool) {
@@ -34,7 +36,7 @@ func PopBubble(alias string) {
 		log.Fatal("ERROR: Unable to marshal bubbles!\n", err)
 	}
 
-	if err := ioutil.WriteFile("bubbles.json", b, 0644); err != nil {
+	if err := ioutil.WriteFile(util.BublConfig, b, 0644); err != nil {
 		log.Fatal("ERROR: Failed to save bubble to file!\n")
 	}
 
