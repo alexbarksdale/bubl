@@ -1,10 +1,8 @@
 package command
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
 	"text/template"
@@ -30,7 +28,7 @@ const (
 	PopUsage    = `bubl pop <bubl-alias>`
 )
 
-func printUsage() {
+func displayUsage() {
 	type Usage struct {
 		Create, Gen, Pop string
 	}
@@ -57,22 +55,10 @@ func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
 	os.Exit(1)
 }
 
-func LoadBubbles() []Bubble {
-	file, err := ioutil.ReadFile(util.BublSavePath)
-	if err != nil {
-		log.Fatal("ERROR: Unable to read bubbles!", err)
-	}
-
-	bubbles := []Bubble{}
-	json.Unmarshal(file, &bubbles)
-
-	return bubbles
-}
-
 func Execute() {
 	// A config will only be generated if it doesn't exist.
 	if err := util.CreateSave(); err != nil {
-		log.Fatal("ERROR: Failed to create bubl save file!", err)
+		log.Fatal("ERROR: Failed to create bubble save file!", err)
 	}
 
 	createCommand := flag.NewFlagSet("create", flag.ExitOnError)
@@ -80,7 +66,7 @@ func Execute() {
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
 
 	if len(os.Args) < 2 {
-		printUsage()
+		displayUsage()
 		return
 	}
 
@@ -105,7 +91,7 @@ func Execute() {
 		popCommand.Parse(input)
 	default:
 		fmt.Printf("Command '%v' does not exist!\n\n", os.Args[1])
-		printUsage()
+		displayUsage()
 		return
 	}
 

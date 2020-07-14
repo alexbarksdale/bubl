@@ -14,25 +14,11 @@ type Bubble struct {
 	Path  string `json:"path"`
 }
 
-func bubbleExist(b []Bubble, alias string) bool {
-	for _, v := range b {
-		if v.Alias == alias {
-			fmt.Printf("Bubble '%v' already exists, please try another alias.\n\n", alias)
-			fmt.Println("Existing Bubble")
-			fmt.Println("────────────────")
-			fmt.Printf("Alias: %v\nPath: %v\n\n", v.Alias, v.Path)
-			return true
-		}
-	}
-	return false
-}
-
-// NOTE: This could be improved upon later.
+// TODO: Figure out '\' situation for Windows
 func CreateBubl(path, alias string) {
-	// TODO: Figure out '\' situation
-	bubbles := LoadBubbles()
+	bubbles, bublTrie := LoadBubbles()
 
-	if bubbleExist(bubbles, alias) {
+	if BubbleExist(bublTrie, alias) {
 		return
 	}
 

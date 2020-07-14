@@ -4,8 +4,9 @@ import (
 	"github.com/alexbarksdale/bubl/command"
 )
 
-// TODO: Check for casing when generating
+// FIXME: Check for casing when generating
 // TODO: Look into godoc
+// FIXME: Program breaks if user deletes bubbles.json
 
 func main() {
 	command.Execute()

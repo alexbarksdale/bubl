@@ -8,22 +8,10 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
-func findBubbleSrc(b []Bubble, alias string) (string, bool) {
-	var src string
-
-	for _, v := range b {
-		if v.Alias == alias {
-			src = v.Path
-			return src, true
-		}
-	}
-	return src, false
-}
-
 func GenBubble(alias string) {
-	bubbles := LoadBubbles()
+	bubbles, _ := LoadBubbles()
 
-	src, found := findBubbleSrc(bubbles, alias)
+	src, found := FindBubbleSrc(bubbles, alias)
 	if !found {
 		fmt.Printf("Bubble '%v' does not exist, please try another alias.\n\n", alias)
 		// TODO: Show available bubbles
