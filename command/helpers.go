@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strings"
 
 	"github.com/alexbarksdale/bubl/util"
 	"github.com/derekparker/trie"
@@ -21,7 +22,8 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 
 	t := trie.New()
 	for _, bubl := range bubbles {
-		t.Add(bubl.Alias, bubl.Path)
+		alias := strings.ToLower(bubl.Alias)
+		t.Add(alias, bubl.Path)
 	}
 	return bubbles, t
 }
@@ -42,7 +44,9 @@ func BubbleExist(t *trie.Trie, alias string) bool {
 func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	var src string
 
-	node, found := t.Find(alias)
+	searchTerm := strings.ToLower(alias)
+
+	node, found := t.Find(searchTerm)
 	if found {
 		meta := node.Meta()
 		src = fmt.Sprintf("%v", meta)
@@ -53,7 +57,7 @@ func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 
 func RemoveBubble(b []Bubble, alias string) ([]Bubble, bool) {
 	for i, v := range b {
-		if v.Alias == alias {
+		if strings.ToLower(v.Alias) == strings.ToLower(alias) {
 			// Swap the last bubble with current bubble
 			b[len(b)-1], b[i] = b[i], b[len(b)-1]
 			// Remove n-1 bubbles
