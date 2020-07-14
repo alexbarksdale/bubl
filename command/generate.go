@@ -32,19 +32,22 @@ func GenBubble(alias string) {
 
 	info, err := os.Stat(src)
 	if err != nil {
-		log.Fatal("ERROR: Unable to read source information!\n", err)
+		fmt.Printf("The path to '%v' is not valid.\n\n%v", alias, err)
+		return
 	}
 
 	fmt.Printf("Generating bubble: '%v'\n", alias)
-	fmt.Println("Large files may take a few seconds.")
-	fmt.Println("")
+	fmt.Printf("Large files may take a few seconds.\n\n")
 
 	if info.IsDir() {
-		util.CopyDir(src, info.Name())
+		if err := util.CopyDir(src, info.Name()); err != nil {
+			log.Fatal("ERROR: Failed to copy directory\n", err)
+		}
 	} else {
-		util.CopyFile(src, info.Name())
+		if err := util.CopyFile(src, info.Name()); err != nil {
+			log.Fatal("ERROR: Failed to copy file\n", err)
+		}
 	}
 
-	fmt.Printf("Successfully generated bubble: '%v'\n", alias)
-	fmt.Println("")
+	fmt.Printf("Successfully generated bubble '%v' to your current directory.\n\n", alias)
 }

@@ -19,7 +19,7 @@ const (
 	Create a new bubble template.
 
 {{.Gen}}
-	Generate a file/directory from a bubble.
+	Generate a template from a bubble.
 
 {{.Pop}}
 	Remove a bubble template.
@@ -29,17 +29,6 @@ const (
 	GenUsage    = `bubl gen <bubl-alias>`
 	PopUsage    = `bubl pop <bubl-alias>`
 )
-
-func invalidArgs(cmd, cmdUsage string, validArg, argGiven int) {
-	if argGiven == 1 {
-		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
-	} else {
-		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argGiven)
-	}
-	fmt.Println(cmdUsage)
-	fmt.Println("")
-	os.Exit(1)
-}
 
 func printUsage() {
 	type Usage struct {
@@ -52,15 +41,26 @@ func printUsage() {
 
 	for _, usage := range u {
 		if err := t.Execute(os.Stdout, usage); err != nil {
-			log.Fatalln("ERROR: Failed creating template!\n", err)
+			log.Fatalln("ERROR: Failed creating template!", err)
 		}
 	}
 }
 
+func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
+	if argsGiven == 1 {
+		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
+	} else {
+		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argsGiven)
+	}
+	fmt.Println(cmdUsage)
+	fmt.Println("")
+	os.Exit(1)
+}
+
 func LoadBubbles() []Bubble {
-	file, err := ioutil.ReadFile(util.BublConfig)
+	file, err := ioutil.ReadFile(util.BublSavePath)
 	if err != nil {
-		log.Fatal("ERROR: Unable to read bubbles!\n", err)
+		log.Fatal("ERROR: Unable to read bubbles!", err)
 	}
 
 	bubbles := []Bubble{}
@@ -71,7 +71,9 @@ func LoadBubbles() []Bubble {
 
 func Execute() {
 	// A config will only be generated if it doesn't exist.
-	util.CreateConfig()
+	if err := util.CreateSave(); err != nil {
+		log.Fatal("ERROR: Failed to create bubl save file!", err)
+	}
 
 	createCommand := flag.NewFlagSet("create", flag.ExitOnError)
 	genCommand := flag.NewFlagSet("gen", flag.ExitOnError)
@@ -102,7 +104,7 @@ func Execute() {
 		}
 		popCommand.Parse(input)
 	default:
-		fmt.Printf("ERROR: command '%v' does not exist!\n\n", os.Args[1])
+		fmt.Printf("Command '%v' does not exist!\n\n", os.Args[1])
 		printUsage()
 		return
 	}

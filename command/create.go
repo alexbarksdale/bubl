@@ -27,9 +27,9 @@ func bubbleExist(b []Bubble, alias string) bool {
 	return false
 }
 
-// May not be the most efficient when 'bubbles.json' gets really large
-// but this will do perfectly fine for now.
+// NOTE: This could be improved upon later.
 func CreateBubl(path, alias string) {
+	// TODO: Figure out '\' situation
 	bubbles := LoadBubbles()
 
 	if bubbleExist(bubbles, alias) {
@@ -48,7 +48,7 @@ func CreateBubl(path, alias string) {
 		log.Fatal("ERROR: Unable to marshal bubbles!\n", err)
 	}
 
-	if err := ioutil.WriteFile(util.BublConfig, b, 0644); err != nil {
+	if err := ioutil.WriteFile(util.BublSavePath, b, 0644); err != nil {
 		log.Fatal("ERROR: Failed to save bubble to file!\n")
 	}
 
