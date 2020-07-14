@@ -21,9 +21,11 @@ func FileExists(filename string) bool {
 }
 
 func CreateSave() error {
+	var saveErr error
+
 	cfg, err := os.UserConfigDir()
 	if err != nil {
-		return err
+		saveErr = err
 	}
 
 	bublDir := filepath.Join(cfg, "bubl")
@@ -31,17 +33,18 @@ func CreateSave() error {
 
 	if !FileExists(BublSavePath) {
 		if err := os.Mkdir(bublDir, 0777); err != nil {
-			return err
+			fmt.Println("It looks like you're missing a 'bubbles.json' file, creating one now...")
+			fmt.Printf("Any bubbles you create will be stored here.\n\n")
 		}
 
 		file, err := os.Create(BublSavePath)
 		if err != nil {
-			return err
+			saveErr = err
 		}
 		file.Close()
 	}
 
-	return err
+	return saveErr
 }
 
 func CopyFile(src, dst string) error {
