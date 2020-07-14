@@ -16,9 +16,9 @@ type Bubble struct {
 
 // TODO: Figure out '\' situation for Windows
 func CreateBubl(path, alias string) {
-	bubbles, bublTrie := LoadBubbles()
+	bubbles, trie := LoadBubbles()
 
-	if BubbleExist(bublTrie, alias) {
+	if BubbleExist(trie, alias) {
 		return
 	}
 

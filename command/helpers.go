@@ -23,7 +23,6 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 	for _, bubl := range bubbles {
 		t.Add(bubl.Alias, bubl.Path)
 	}
-
 	return bubbles, t
 }
 
@@ -40,13 +39,14 @@ func BubbleExist(t *trie.Trie, alias string) bool {
 	return false
 }
 
-func FindBubbleSrc(b []Bubble, alias string) (string, bool) {
+func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	var src string
 
-	for _, v := range b {
-		if v.Alias == alias {
-			return src, true
-		}
+	node, found := t.Find(alias)
+	if found {
+		meta := node.Meta()
+		src = fmt.Sprintf("%v", meta)
+		return src, found
 	}
 	return src, false
 }
