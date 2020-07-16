@@ -15,7 +15,7 @@ type Bubble struct {
 }
 
 // TODO: Figure out '\' situation for Windows
-func CreateBubl(path, alias string) {
+func CreateBubble(path, alias string) {
 	bubbles, trie := LoadBubbles()
 
 	if BubbleExist(trie, alias) {

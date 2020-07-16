@@ -22,18 +22,22 @@ const (
 {{.Pop}}
 	Remove a bubble template.
 
+{{.List}}
+	List out created bubbles.
+
 `
 	CreateUsage = `bubl create <template-path> <bubl-alias>`
 	GenUsage    = `bubl gen <bubl-alias>`
 	PopUsage    = `bubl pop <bubl-alias>`
+	ListUsage   = `bubl list <bubl-alias>`
 )
 
 func displayUsage() {
 	type Usage struct {
-		Create, Gen, Pop string
+		Create, Gen, Pop, List string
 	}
 
-	var u = []Usage{{CreateUsage, GenUsage, PopUsage}}
+	var u = []Usage{{CreateUsage, GenUsage, PopUsage, ListUsage}}
 
 	t := template.Must(template.New("bublUsage").Parse(bublUsage))
 
@@ -64,6 +68,7 @@ func Execute() {
 	createCommand := flag.NewFlagSet("create", flag.ExitOnError)
 	genCommand := flag.NewFlagSet("gen", flag.ExitOnError)
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
+	listCommand := flag.NewFlagSet("list", flag.ExitOnError)
 
 	if len(os.Args) < 2 {
 		displayUsage()
@@ -89,6 +94,8 @@ func Execute() {
 			invalidArgs("pop", PopUsage, 1, inputLen)
 		}
 		popCommand.Parse(input)
+	case "list":
+		listCommand.Parse(input)
 	default:
 		fmt.Printf("Command '%v' does not exist!\n\n", os.Args[1])
 		displayUsage()
@@ -96,7 +103,7 @@ func Execute() {
 	}
 
 	if createCommand.Parsed() {
-		CreateBubl(os.Args[2], os.Args[3])
+		CreateBubble(os.Args[2], os.Args[3])
 	}
 
 	if genCommand.Parsed() {
@@ -105,5 +112,9 @@ func Execute() {
 
 	if popCommand.Parsed() {
 		PopBubble(os.Args[2])
+	}
+
+	if listCommand.Parsed() {
+		ListBubbles()
 	}
 }
