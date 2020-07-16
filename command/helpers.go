@@ -29,7 +29,7 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 }
 
 func BubbleExist(t *trie.Trie, alias string) bool {
-	node, found := t.Find(alias)
+	node, found := t.Find(strings.ToLower(alias))
 	if found {
 		meta := node.Meta()
 		fmt.Printf("Bubble '%v' already exists, please try another alias.\n\n", alias)

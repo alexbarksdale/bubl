@@ -15,14 +15,16 @@ type Bubble struct {
 }
 
 // TODO: Figure out '\' situation for Windows
-func CreateBubble(path, alias string) {
+func CreateBubble(path, alias string) Bubble {
+	var bubl Bubble
+
 	bubbles, trie := LoadBubbles()
 
 	if BubbleExist(trie, alias) {
-		return
+		return bubl
 	}
 
-	bubl := Bubble{
+	bubl = Bubble{
 		Alias: alias,
 		Path:  path,
 	}
@@ -47,4 +49,6 @@ func CreateBubble(path, alias string) {
 	fmt.Println("Generate your bubble with:")
 	fmt.Println(GenUsage)
 	fmt.Println("")
+
+	return bubl
 }
