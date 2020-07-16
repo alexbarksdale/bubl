@@ -9,14 +9,17 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
-func PopBubble(alias string) {
+func PopBubble(alias string) bool {
 	bubbles, _ := LoadBubbles()
 
 	removedBubble, success := RemoveBubble(bubbles, alias)
 	if !success {
 		fmt.Printf("Unable to find bubble: '%v'\n\n", alias)
-		// TODO: Print list bubble info
-		return
+
+		fmt.Println("View your bubbles with: ")
+		fmt.Println(ListUsage)
+		fmt.Println("")
+		return false
 	}
 
 	b, err := json.Marshal(removedBubble)
@@ -29,4 +32,5 @@ func PopBubble(alias string) {
 	}
 
 	fmt.Printf("Successfully removed bubble: '%v'\n\n", alias)
+	return true
 }

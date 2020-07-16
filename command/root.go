@@ -29,7 +29,7 @@ const (
 	CreateUsage = `bubl create <template-path> <bubl-alias>`
 	GenUsage    = `bubl gen <bubl-alias>`
 	PopUsage    = `bubl pop <bubl-alias>`
-	ListUsage   = `bubl list <bubl-alias>`
+	ListUsage   = `bubl list`
 )
 
 func displayUsage() {
