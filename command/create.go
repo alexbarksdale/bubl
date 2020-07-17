@@ -9,6 +9,7 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
+// Bubble stores the alias of bubble and a path to a template.
 type Bubble struct {
 	Alias string `json:"alias"`
 	Path  string `json:"path"`

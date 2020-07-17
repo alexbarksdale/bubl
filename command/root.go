@@ -34,6 +34,7 @@ const (
 	ListUsage   = `bubl list`
 )
 
+// displayUsage populates the bublUsage template.
 func displayUsage() {
 	type Usage struct {
 		Create, Gen, Pop, List string
@@ -50,6 +51,7 @@ func displayUsage() {
 	}
 }
 
+// invalidArgs is a helper function that sends an invalid amount of arguments message to the user.
 func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
 	if argsGiven == 1 {
 		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
