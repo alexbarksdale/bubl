@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 	"text/template"
 
 	"github.com/alexbarksdale/bubl/util"
@@ -21,15 +22,18 @@ const (
 {{.Gen}}
 	Generate a template from a bubble to your current directory.
 
+	OPTIONS:
+	-bundle
+		Bundle together multiple bubbles to generate.
+
 {{.Pop}}
 	Remove a bubble template.
 
 {{.List}}
 	List out created bubbles.
-
 `
 	CreateUsage = `bubl create <template-path> <bubl-alias>`
-	GenUsage    = `bubl gen <bubl-alias>`
+	GenUsage    = `bubl gen (options) <bubl-alias>`
 	PopUsage    = `bubl pop <bubl-alias>`
 	ListUsage   = `bubl list`
 )
@@ -53,7 +57,7 @@ func displayUsage() {
 
 // invalidArgs is a helper function that sends an invalid amount of arguments message to the user.
 func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
-	if argsGiven == 1 {
+	if argsGiven <= 1 {
 		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
 	} else {
 		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argsGiven)
@@ -76,6 +80,8 @@ func Execute() {
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
 	listCommand := flag.NewFlagSet("list", flag.ExitOnError)
 
+	genBundlePtr := genCommand.Bool("bundle", false, "Buble up bubbles")
+
 	if len(os.Args) < 2 {
 		displayUsage()
 		return
@@ -87,19 +93,10 @@ func Execute() {
 	// Check if the argument given is a valid command.
 	switch os.Args[1] {
 	case "create":
-		if inputLen != 2 {
-			invalidArgs("create", CreateUsage, 2, inputLen)
-		}
 		createCommand.Parse(input)
 	case "gen":
-		if inputLen != 1 {
-			invalidArgs("gen", GenUsage, 1, inputLen)
-		}
 		genCommand.Parse(input)
 	case "pop":
-		if inputLen != 1 {
-			invalidArgs("pop", PopUsage, 1, inputLen)
-		}
 		popCommand.Parse(input)
 	case "list":
 		listCommand.Parse(input)
@@ -110,14 +107,40 @@ func Execute() {
 	}
 
 	if createCommand.Parsed() {
+		if inputLen != 2 {
+			invalidArgs("create", CreateUsage, 2, inputLen)
+		}
 		CreateBubble(os.Args[2], os.Args[3])
 	}
 
 	if genCommand.Parsed() {
-		GenBubble(os.Args[2])
+		switch {
+		case *genBundlePtr && inputLen < 2:
+			fmt.Println("You must provide bubbles to bundle.")
+			fmt.Println("")
+		case *genBundlePtr:
+			var wg sync.WaitGroup
+
+			wg.Add(len(os.Args[3:]))
+
+			for _, bubl := range os.Args[3:] {
+				go func(b string) {
+					GenBubble(b)
+					wg.Done()
+				}(bubl)
+			}
+			wg.Wait()
+		case inputLen != 1:
+			invalidArgs("gen", GenUsage, 1, inputLen)
+		default:
+			GenBubble(os.Args[2])
+		}
 	}
 
 	if popCommand.Parsed() {
+		if inputLen != 1 {
+			invalidArgs("pop", PopUsage, 1, inputLen)
+		}
 		PopBubble(os.Args[2])
 	}
 
