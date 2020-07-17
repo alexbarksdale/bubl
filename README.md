@@ -1,7 +1,7 @@
 # bubl
 [![Go Report Card](https://goreportcard.com/badge/github.com/alexbarksdale/bubl)](https://goreportcard.com/report/github.com/alexbarksdale/bubl)
 
-Bubl is a flexible and easy-to-use boilerplate generator. boilerplate generator. Bubl lets you create a template from any file or directory on your system. No need to rely on third party services to create a template that fits your needs, create it yourself.
+Bubl is a flexible and easy-to-use boilerplate generator. Bubl lets you create a template from any file or directory on your system. No need to rely on third party services to create a template that fits your needs, create it yourself.
 
 ![bubl](https://i.imgur.com/48sF3mT.gif)
 
