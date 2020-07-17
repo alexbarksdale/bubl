@@ -51,8 +51,8 @@ $ go run main.go
 
 | Command                                  | Usage                                                                                        |
 |--------------------------------------------|----------------------------------------------------------------------------------------------|
-| bubl create <template\-path> <bubl\-alias> | Create a bubble by providing a path to your template and an alias to identify your bubble\.  |
-| bubl gen <bubl\-alias>                     | Generate a template from a bubble\.                                                          |
-| bubl pop <bubl\-alias>                     | Remove a bubble template\.                                                                   |
-| bubl list                                  | List out created bubbles\.                                                                   |
+| `bubl create <template-path> <bubl-alias>` | Create a bubble by providing a path to your template and an alias to identify your bubble\.  |
+| `bubl gen <bubl-alias>`             | Generate a template from a bubble\.                                                          |
+| `bubl pop <bubl-alias>`                    | Remove a bubble template\.                                                                   |
+| `bubl list`                               | List out created bubbles\.                                                                   |
                                                                         
