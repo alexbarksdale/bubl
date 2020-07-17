@@ -57,7 +57,7 @@ func displayUsage() {
 
 // invalidArgs is a helper function that sends an invalid amount of arguments message to the user.
 func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
-	if argsGiven <= 1 {
+	if argsGiven == 1 {
 		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
 	} else {
 		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argsGiven)
@@ -130,10 +130,10 @@ func Execute() {
 				}(bubl)
 			}
 			wg.Wait()
-		case inputLen != 1:
-			invalidArgs("gen", GenUsage, 1, inputLen)
-		default:
+		case inputLen == 1:
 			GenBubble(os.Args[2])
+		default:
+			invalidArgs("gen", GenUsage, 1, inputLen)
 		}
 	}
 

@@ -46,7 +46,6 @@ func CreateSave() error {
 		}
 		file.Close()
 	}
-
 	return saveErr
 }
 
