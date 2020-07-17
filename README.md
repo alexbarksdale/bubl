@@ -11,7 +11,6 @@ Bubl is a flexible and easy-to-use boilerplate generator. Bubl lets you create a
   * [Installation - Global](#installation-global)
   * [Installation - Local](#installation-local)
 * [Commands](#commands)
-  * [Options](#options)
 
 ## Getting Started
 <a name="prereq"></a>
@@ -45,21 +44,25 @@ $ cd bubl
 $ go run main.go
 ```
 
-
-
 <a name="commands"></a>
 # Commands
 
-| Command                                  | Usage                                                                                        |
-|--------------------------------------------|----------------------------------------------------------------------------------------------|
-| `bubl create <template-path> <bubl-alias>` | Create a bubble by providing a path to your template and an alias to identify your bubble\.  |
-| `bubl gen (options) <bubl-alias>`             | Generate a template from a bubble to your current directory\.                             |
-| `bubl pop <bubl-alias>`                    | Remove a bubble template\.                                                                   |
-| `bubl list`                               | List out created bubbles\.                                                                    |
+```Usage: bubl <command>
 
-<a name="options"></a>
-## Options                                                                        
-| Command                      | Option   | Usage                                    |
-|-------------------------------------|----------|------------------------------------------------|
-| `bubl gen (options) <bubl-alias> ...` | `-bundle` | Bundle together an arbitrary amount of bubbles to generate\. |
+$ bubl create <template-path> <bubl-alias>
+	Create a bubble by providing a path to your template 
+	and an alias to identify your bubble.
 
+$ bubl gen (options) <bubl-alias>
+	Generate a template from a bubble to your current directory.
+
+	OPTIONS:
+	-bundle
+		Bundle together an arbitrary amount of bubbles to generate.
+
+$ bubl pop <bubl-alias>
+	Remove a bubble template.
+
+$ bubl list
+	List out created bubbles.
+```
