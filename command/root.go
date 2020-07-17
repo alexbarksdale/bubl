@@ -15,7 +15,8 @@ const (
 	bublUsage = `Usage: bubl <command>
 
 {{.Create}}
-	Create a new bubble template.
+	Create a bubble by providing a path to your template 
+	and an alias to identify your bubble.
 
 {{.Gen}}
 	Generate a template from a bubble.

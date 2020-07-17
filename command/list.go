@@ -2,6 +2,8 @@ package command
 
 import "fmt"
 
+// TODO: Show another message for having no bubbles
+
 // ListBubbles iterates over bubbles.json and prints out each bubble.
 func ListBubbles() {
 	bubbles, _ := LoadBubbles()
