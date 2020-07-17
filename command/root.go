@@ -19,7 +19,7 @@ const (
 	and an alias to identify your bubble.
 
 {{.Gen}}
-	Generate a template from a bubble.
+	Generate a template from a bubble to your current directory.
 
 {{.Pop}}
 	Remove a bubble template.

@@ -9,7 +9,7 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
-// PopBubble takes an alias and removes a matching bubble.
+// PopBubble removes a bubble corresponding to the alias taken in.
 func PopBubble(alias string) bool {
 	bubbles, _ := LoadBubbles()
 

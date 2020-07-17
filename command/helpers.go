@@ -30,7 +30,7 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 	return bubbles, t
 }
 
-// BubbleExist validates a bubble by searching through a trie tree with a given alias.
+// BubbleExist validates a bubble by searching through a trie with a given alias.
 func BubbleExist(t *trie.Trie, alias string) bool {
 	node, found := t.Find(strings.ToLower(alias))
 	if found {
@@ -44,7 +44,7 @@ func BubbleExist(t *trie.Trie, alias string) bool {
 	return false
 }
 
-// FindBubbleSrc locates a file/directory of a bubble by taking in a trie tree and alias.
+// FindBubbleSrc locates a file/directory of a bubble by searching through a trie and alias.
 func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	var src string
 
@@ -64,9 +64,7 @@ func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 func RemoveBubble(b []Bubble, alias string) ([]Bubble, bool) {
 	for i, v := range b {
 		if strings.ToLower(v.Alias) == strings.ToLower(alias) {
-			// Swap the last bubble with current bubble
 			b[len(b)-1], b[i] = b[i], b[len(b)-1]
-			// Remove n-1 bubbles
 			return b[:len(b)-1], true
 		}
 	}

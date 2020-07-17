@@ -7,12 +7,19 @@ import "fmt"
 // ListBubbles iterates over bubbles.json and prints out each bubble.
 func ListBubbles() {
 	bubbles, _ := LoadBubbles()
-
-	fmt.Println("Your Bubbles")
-	fmt.Println("───────────── ")
-	for _, bubl := range bubbles {
-		fmt.Printf("Alias: %v\n", bubl.Alias)
-		fmt.Printf("Path: %v\n", bubl.Path)
+	if len(bubbles) > 1 {
+		fmt.Println("Your Bubbles")
+		fmt.Println("───────────── ")
+		for _, bubl := range bubbles {
+			fmt.Printf("Alias: %v\n", bubl.Alias)
+			fmt.Printf("Path: %v\n\n", bubl.Path)
+		}
+	} else {
+		fmt.Println("You don't have any bubbles!")
+		fmt.Println("")
+		fmt.Println("Create one with:")
+		fmt.Println(CreateUsage)
 		fmt.Println("")
 	}
+
 }
