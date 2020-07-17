@@ -61,5 +61,5 @@ $ go run main.go
 ## Options                                                                        
 | Command                      | Option   | Usage                                    |
 |-------------------------------------|----------|------------------------------------------------|
-| `bubl gen (options) <bubl-alias> ...` | \-bundle | Bundle together an arbitrary amount of bubbles to generate\. |
+| `bubl gen (options) <bubl-alias> ...` | `-bundle` | Bundle together an arbitrary amount of bubbles to generate\. |
 
