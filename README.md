@@ -16,7 +16,7 @@ Bubl is a flexible and easy-to-use boilerplate generator. Bubl lets you create a
 <a name="prereq"></a>
 ### Prerequisites
 1. If you haven't already, install [Go](https://golang.org/). Make sure you installed it correctly by running: `$ go`
-2. If you would like to use bubl anywhere on your machine make sure that your `$GOBIN` is exported into your path. i.e `.bashrc` or  `.zshrc`.
+2. If you would like to use bubl anywhere on your machine make sure that your `$GOBIN` is exported into your path. i.e `.bashrc` or  `.zshrc`
 
 <a name="installation-global"></a>
 ### Installation - Global
@@ -52,7 +52,7 @@ $ go run main.go
 | Command                                  | Usage                                                                                        |
 |--------------------------------------------|----------------------------------------------------------------------------------------------|
 | `bubl create <template-path> <bubl-alias>` | Create a bubble by providing a path to your template and an alias to identify your bubble\.  |
-| `bubl gen <bubl-alias>`             | Generate a template from a bubble\.                                                          |
+| `bubl gen <bubl-alias>`             | Generate a template from a bubble to your current directory\.                                                          |
 | `bubl pop <bubl-alias>`                    | Remove a bubble template\.                                                                   |
 | `bubl list`                               | List out created bubbles\.                                                                   |
                                                                         
