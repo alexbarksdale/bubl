@@ -1,38 +1,13 @@
 package command
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/alexbarksdale/bubl/util"
 	"github.com/stretchr/testify/assert"
 )
-
-func createTestSave() error {
-	var saveErr error
-
-	dir, err := os.Getwd()
-	if err != nil {
-		saveErr = err
-	}
-
-	testSave := filepath.Join(dir, "testSave.json")
-	if err := os.Mkdir(testSave, 0777); err != nil {
-		fmt.Println("It looks like you're missing a 'bubbles.json' file, creating one now...")
-		fmt.Printf("Any bubbles you create will be stored here.\n\n")
-	}
-
-	file, err := os.Create(testSave)
-	if err != nil {
-		saveErr = err
-	}
-	file.Close()
-
-	return saveErr
-}
 
 func TestCreateBubble(t *testing.T) {
 	// Ensure we have a bubble save file

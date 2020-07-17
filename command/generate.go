@@ -8,20 +8,20 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
-func GenBubble(alias string) {
+func GenBubble(alias string) bool {
 	_, trie := LoadBubbles()
 
 	src, found := FindBubbleSrc(trie, alias)
 	if !found {
 		fmt.Printf("Bubble '%v' does not exist, please try another alias.\n\n", alias)
 		// TODO: Show available bubbles
-		return
+		return false
 	}
 
 	info, err := os.Stat(src)
 	if err != nil {
 		fmt.Printf("The path to '%v' is not valid.\n\n%v", alias, err)
-		return
+		return false
 	}
 
 	fmt.Printf("Generating bubble: '%v'\n", alias)
@@ -38,4 +38,5 @@ func GenBubble(alias string) {
 	}
 
 	fmt.Printf("Successfully generated bubble '%v' to your current directory.\n\n", alias)
+	return true
 }
