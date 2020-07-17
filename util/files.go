@@ -10,8 +10,10 @@ import (
 	"path/filepath"
 )
 
+// BublSavePath stores the location of bubbles.json.
 var BublSavePath string
 
+// FileExists validates a given filename is a file.
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -20,6 +22,7 @@ func FileExists(filename string) bool {
 	return !info.IsDir()
 }
 
+// CreateSave creates a bubbles.json file in the user's config directory to save bubbles.
 func CreateSave() error {
 	var saveErr error
 
@@ -47,6 +50,7 @@ func CreateSave() error {
 	return saveErr
 }
 
+// CopyFile copies a file in a given src to a dst.
 func CopyFile(src, dst string) error {
 	srcFile, err := os.Open(src)
 	if err != nil {
@@ -75,6 +79,7 @@ func CopyFile(src, dst string) error {
 	return os.Chmod(dst, srcInfo.Mode())
 }
 
+// CopyDir copies a directory in a given src to a dst.
 func CopyDir(src, dst string) error {
 	info, err := os.Stat(src)
 	if err != nil {
