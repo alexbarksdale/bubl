@@ -24,7 +24,7 @@ const (
 
 	OPTIONS:
 	-bundle
-		Bundle together multiple bubbles to generate.
+		Bundle together an arbitrary amount of bubbles to generate.
 
 {{.Pop}}
 	Remove a bubble template.
