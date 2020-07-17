@@ -2,6 +2,7 @@ package command
 
 import "fmt"
 
+// ListBubbles iterates over bubbles.json and prints out each bubble.
 func ListBubbles() {
 	bubbles, _ := LoadBubbles()
 

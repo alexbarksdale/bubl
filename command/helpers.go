@@ -30,7 +30,7 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 	return bubbles, t
 }
 
-// BubbleExist validates a bubble by taking in a trie tree and alias.
+// BubbleExist validates a bubble by searching through a trie tree with a given alias.
 func BubbleExist(t *trie.Trie, alias string) bool {
 	node, found := t.Find(strings.ToLower(alias))
 	if found {

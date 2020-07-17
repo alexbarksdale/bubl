@@ -8,6 +8,8 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
+// GenBubble takes an alias and generates a bubble corresponding
+// with the alias provided if it's valid.
 func GenBubble(alias string) bool {
 	_, trie := LoadBubbles()
 

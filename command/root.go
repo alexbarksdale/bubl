@@ -10,6 +10,7 @@ import (
 	"github.com/alexbarksdale/bubl/util"
 )
 
+// Description of all the command usages.
 const (
 	bublUsage = `Usage: bubl <command>
 
@@ -59,12 +60,14 @@ func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
 	os.Exit(1)
 }
 
+// Execute parses a command line argument and sends off the corresponding command.
 func Execute() {
 	// A config will only be generated if it doesn't exist.
 	if err := util.CreateSave(); err != nil {
 		log.Fatal("ERROR: Failed to create bubble save file!", err)
 	}
 
+	// Commands
 	createCommand := flag.NewFlagSet("create", flag.ExitOnError)
 	genCommand := flag.NewFlagSet("gen", flag.ExitOnError)
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
@@ -78,6 +81,7 @@ func Execute() {
 	input := os.Args[2:]
 	inputLen := len(input)
 
+	// Check if the argument given is a valid command.
 	switch os.Args[1] {
 	case "create":
 		if inputLen != 2 {

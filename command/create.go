@@ -15,6 +15,10 @@ type Bubble struct {
 }
 
 // TODO: Figure out '\' situation for Windows
+
+// CreateBubble takes a path to file/directory they wish to create a bubble for
+// and an alias which represents their bubble. A bubble is saved to bubbles.json
+// in a user's config dir (os.UserConfigDir()).
 func CreateBubble(path, alias string) Bubble {
 	var bubl Bubble
 
