@@ -50,9 +50,9 @@ func TestCreateBubble(t *testing.T) {
 		assert.Equal(t, test.want.Path, bubl.Path)
 	}
 
-	_, trie := LoadBubbles()
+	_, trie := loadBubbles()
 	for _, test := range tests {
-		assert.True(t, BubbleExist(trie, test.want.Alias))
+		assert.True(t, bubbleExist(trie, test.want.Alias))
 	}
 
 	// Clean up created test bubbles

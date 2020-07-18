@@ -10,9 +10,6 @@ import (
 	"path/filepath"
 )
 
-// BublSavePath stores the location of bubbles.json.
-var BublSavePath string
-
 // FileExists validates a given filename is a file.
 func FileExists(filename string) bool {
 	info, err := os.Stat(filename)
@@ -21,6 +18,9 @@ func FileExists(filename string) bool {
 	}
 	return !info.IsDir()
 }
+
+// BublSavePath stores the location of bubbles.json.
+var BublSavePath string
 
 // CreateSave creates a bubbles.json file in the user's config directory to save bubbles.
 func CreateSave() error {

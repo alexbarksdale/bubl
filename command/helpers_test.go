@@ -17,12 +17,12 @@ func BenchmarkFindBubbleSrc(b *testing.B) {
 	alias := "Bubble_Find_Bubble_Src"
 	CreateBubble(dir, alias)
 
-	_, trie := LoadBubbles()
+	_, trie := loadBubbles()
 
 	for i := 0; i < b.N; i++ {
 		b.Run(fmt.Sprintf("%d", i), func(b *testing.B) {
 			b.ReportAllocs()
-			c, _ := FindBubbleSrc(trie, alias)
+			c, _ := findBubbleSrc(trie, alias)
 			fmt.Println(c)
 		})
 	}

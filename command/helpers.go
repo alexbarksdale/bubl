@@ -12,7 +12,7 @@ import (
 	"github.com/derekparker/trie"
 )
 
-// InvalidArgs is a helper function that sends an invalid amount of arguments message to the user.
+// invalidArgs is a helper function that sends an invalid amount of arguments message to the user.
 func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
 	if argsGiven == 1 {
 		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
@@ -24,9 +24,9 @@ func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
 	os.Exit(1)
 }
 
-// LoadBubbles reads the BublSavePath and unmarshals the bubble.json file.
+// loadBubbles reads the BublSavePath and unmarshals the bubble.json file.
 // It also generates a trie tree of all the aliases for improved search speed.
-func LoadBubbles() ([]Bubble, *trie.Trie) {
+func loadBubbles() ([]Bubble, *trie.Trie) {
 	file, err := ioutil.ReadFile(util.BublSavePath)
 	if err != nil {
 		log.Fatal("ERROR: Unable to load bubbles! ", err)
@@ -43,8 +43,8 @@ func LoadBubbles() ([]Bubble, *trie.Trie) {
 	return bubbles, t
 }
 
-// BubbleExist validates a bubble by searching through a trie with a given alias.
-func BubbleExist(t *trie.Trie, alias string) bool {
+// bubbleExist validates a bubble by searching through a trie with a given alias.
+func bubbleExist(t *trie.Trie, alias string) bool {
 	node, found := t.Find(strings.ToLower(alias))
 	if found {
 		meta := node.Meta()
@@ -57,8 +57,8 @@ func BubbleExist(t *trie.Trie, alias string) bool {
 	return false
 }
 
-// FindBubbleSrc locates a file/directory of a bubble by searching through a trie with a given alias.
-func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
+// findBubbleSrc locates a file/directory of a bubble by searching through a trie with a given alias.
+func findBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	var src string
 
 	searchTerm := strings.ToLower(alias)
@@ -72,9 +72,9 @@ func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	return src, false
 }
 
-// RemoveBubble iterates over a []Bubble to find a matching bubble alias
+// removeBubble iterates over a []Bubble to find a matching bubble alias
 // and removes it by swapping it with the last item and returning n-1 items.
-func RemoveBubble(b []Bubble, alias string) ([]Bubble, bool) {
+func removeBubble(b []Bubble, alias string) ([]Bubble, bool) {
 	for i, v := range b {
 		if strings.ToLower(v.Alias) == strings.ToLower(alias) {
 			b[len(b)-1], b[i] = b[i], b[len(b)-1]

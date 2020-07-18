@@ -11,9 +11,9 @@ import (
 
 // PopBubble removes a bubble corresponding to the alias taken in.
 func PopBubble(alias string) bool {
-	bubbles, _ := LoadBubbles()
+	bubbles, _ := loadBubbles()
 
-	removedBubble, success := RemoveBubble(bubbles, alias)
+	removedBubble, success := removeBubble(bubbles, alias)
 	if !success {
 		fmt.Printf("Unable to find bubble: '%v'\n\n", alias)
 

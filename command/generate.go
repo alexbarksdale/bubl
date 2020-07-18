@@ -11,9 +11,9 @@ import (
 // GenBubble takes an alias and generates a bubble corresponding
 // with the alias provided if it's valid.
 func GenBubble(alias string) bool {
-	_, trie := LoadBubbles()
+	_, trie := loadBubbles()
 
-	src, found := FindBubbleSrc(trie, alias)
+	src, found := findBubbleSrc(trie, alias)
 	if !found {
 		fmt.Printf("Bubble '%v' does not exist, please try another alias.\n\n", alias)
 		// TODO: Show available bubbles

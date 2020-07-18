@@ -6,7 +6,7 @@ import "fmt"
 
 // ListBubbles iterates over bubbles.json and prints out each bubble.
 func ListBubbles() {
-	bubbles, _ := LoadBubbles()
+	bubbles, _ := loadBubbles()
 	if len(bubbles) > 1 {
 		fmt.Println("Your Bubbles")
 		fmt.Println("───────────── ")

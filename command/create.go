@@ -23,9 +23,9 @@ type Bubble struct {
 func CreateBubble(path, alias string) Bubble {
 	var bubl Bubble
 
-	bubbles, trie := LoadBubbles()
+	bubbles, trie := loadBubbles()
 
-	if BubbleExist(trie, alias) {
+	if bubbleExist(trie, alias) {
 		return bubl
 	}
 
