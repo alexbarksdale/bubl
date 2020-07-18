@@ -55,18 +55,6 @@ func displayUsage() {
 	}
 }
 
-// invalidArgs is a helper function that sends an invalid amount of arguments message to the user.
-func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
-	if argsGiven == 1 {
-		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
-	} else {
-		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argsGiven)
-	}
-	fmt.Println(cmdUsage)
-	fmt.Println("")
-	os.Exit(1)
-}
-
 // Execute parses a command line argument and sends off the corresponding command.
 func Execute() {
 	// A config will only be generated if it doesn't exist.
@@ -80,17 +68,17 @@ func Execute() {
 	popCommand := flag.NewFlagSet("remove", flag.ExitOnError)
 	listCommand := flag.NewFlagSet("list", flag.ExitOnError)
 
-	genBundlePtr := genCommand.Bool("bundle", false, "Buble up bubbles")
+	// Options
+	genBundlePtr := genCommand.Bool("bundle", false, "Bundle together an arbitrary amount of bubbles to generate.")
 
 	if len(os.Args) < 2 {
 		displayUsage()
 		return
 	}
 
+	// Check if the input given is a valid command.
 	input := os.Args[2:]
-	inputLen := len(input)
 
-	// Check if the argument given is a valid command.
 	switch os.Args[1] {
 	case "create":
 		createCommand.Parse(input)
@@ -106,24 +94,31 @@ func Execute() {
 		return
 	}
 
+	// TODO: Consider moving parsed logic separately too clean up this file.
+
+	inputLen := len(input)
+
 	if createCommand.Parsed() {
+		path := os.Args[2]
+		alias := os.Args[3]
 		if inputLen != 2 {
 			invalidArgs("create", CreateUsage, 2, inputLen)
 		}
-		CreateBubble(os.Args[2], os.Args[3])
+		CreateBubble(path, alias)
 	}
 
 	if genCommand.Parsed() {
 		switch {
 		case *genBundlePtr && inputLen < 2:
-			fmt.Println("You must provide bubbles to bundle.")
-			fmt.Println("")
+			fmt.Printf("You must provide bubbles to bundle.\n\n")
 		case *genBundlePtr:
 			var wg sync.WaitGroup
 
-			wg.Add(len(os.Args[3:]))
+			bubbles := os.Args[3:]
 
-			for _, bubl := range os.Args[3:] {
+			wg.Add(len(bubbles))
+
+			for _, bubl := range bubbles {
 				go func(b string) {
 					GenBubble(b)
 					wg.Done()

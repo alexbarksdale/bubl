@@ -5,11 +5,24 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/alexbarksdale/bubl/util"
 	"github.com/derekparker/trie"
 )
+
+// InvalidArgs is a helper function that sends an invalid amount of arguments message to the user.
+func invalidArgs(cmd, cmdUsage string, validArg, argsGiven int) {
+	if argsGiven == 1 {
+		fmt.Printf("ERROR: '%v' takes %v argument, but 1 was given.\n\n", cmd, validArg)
+	} else {
+		fmt.Printf("ERROR: '%v' takes %v arguments, but %v were given.\n\n", cmd, validArg, argsGiven)
+	}
+	fmt.Println(cmdUsage)
+	fmt.Println("")
+	os.Exit(1)
+}
 
 // LoadBubbles reads the BublSavePath and unmarshals the bubble.json file.
 // It also generates a trie tree of all the aliases for improved search speed.
@@ -44,7 +57,7 @@ func BubbleExist(t *trie.Trie, alias string) bool {
 	return false
 }
 
-// FindBubbleSrc locates a file/directory of a bubble by searching through a trie and alias.
+// FindBubbleSrc locates a file/directory of a bubble by searching through a trie with a given alias.
 func FindBubbleSrc(t *trie.Trie, alias string) (string, bool) {
 	var src string
 
